@@ -117,9 +117,14 @@ void loadFile(vector <student> &data) {
 
 // --------- FUNC Output File ----------
 
-void outputFile(vector <student> &data) {
-  
+void outputFile(vector <student> &data, string fileName) {
+  ofstream fout;
+
 }
+
+// ---------- FUNC Data Processing ----------
+
+
 
 // --------- FUNC DISPLAY ----------
 
