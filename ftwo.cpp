@@ -93,7 +93,7 @@ void loadFile(vector <student> &data) {
 
     // Get variables for total number of Students & Subjects
     fin >> totalStudents >> totalSubj;
-    fin.ignore();
+    fin.ignore(); // Ignores extra characters left from previous input.
 
     // Iteration construct to get subject names.
     for (int ia = 0; ia < totalSubj; ia++) {
@@ -118,7 +118,7 @@ void loadFile(vector <student> &data) {
       }
 
       buffer.processAverage(); // Processes the average for the person.
-      data.push_back(buffer);
+      data.push_back(buffer); // Adds the buffer (student n) object to the vector.
       fin.ignore();
     }
 
@@ -131,8 +131,18 @@ void loadFile(vector <student> &data) {
 // --- FILE OUTPUT ---
 void outputFile(vector <student> &data, string fileName) {
   ofstream fout;
-  // Do output options
-  cout << "***** Output to \" " << fileName << "\" successful!" << endl;
+  fout.open(fileName);
+
+  if (fout.is_open()) {
+    // Start output
+    
+
+    cout << "***** Output to \" " << fileName << "\" successful!" << endl;
+  } else {
+    cout << "***** Error Opening \"" << fileName << "\".\n\n";
+  }
+
+  fout.close();
 }
 
 // ---------- FUNC Data Processing ----------
@@ -164,7 +174,7 @@ void calcAvg(vector <student> &data, unsigned short int choice) {
 // --- MAIN MENU ---
 void displayMenu() {
   cout << "\n ---------- \nAVAILABLE FUNCTIONS\n ---------- \n" << endl;
-  cout << "1. Load Student Data File\n2. Display Statistics ...\n3. DEBUG\n0. EXIT PROGRAM\n";
+  cout << "1. Load Student Data File\n2. Display Statistics ...\n3. Raw Data Dump\n0. EXIT PROGRAM\n";
 }
 
 // --- STATS ---
@@ -181,13 +191,13 @@ void displayStats(vector <student> &data) {
 
 // --- DEBUG DATA DUMP ---
 void debug_displayData(vector <student> &data) {
-  cout << "\n ---------- \nDEBUG DISPLAY DATA\n ---------- \n" << endl;
+  cout << "\n ---------- \nDATA DUMP\n ---------- \n" << endl;
   cout << "Total num of Students : " << totalStudents << " Total num of Subjects : " << totalSubj << endl;
 
   for (int i = 0; i < totalStudents; i++) {
-    cout << data[i].getName() << " " << data[i].getAverage() << endl;
+    cout << left <<  setw(15) << data[i].getName() << setw(2) << " " << left << setw(4) << (float)data[i].getAverage();
     for (int ib = 0; ib < totalSubj; ib++) {
-      cout << subjects[ib] << " : " << data[i].getMark((unsigned int)ib) << "\t";
+      cout << setw(subjects[ib].length() + 2) << subjects[ib] << " : " << left << setw(4) << (float)data[i].getMark((unsigned int)ib);
     }
     cout << endl;
   }
