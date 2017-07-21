@@ -15,6 +15,7 @@ using namespace std;
 // ---------- VAR Global Variables ----------
 vector <string> subjects;
 int totalStudents, totalSubj;
+bool isFileLoaded = false;
 
 // ---------- CLASS Student ----------
 class student {
@@ -42,17 +43,26 @@ public:
 
 // ---------- FUNC MISC ----------
 
-// ----- GET INPUT <unsigned short int> -----
+// --- GET INPUT <unsigned short int> ---
 unsigned short int getMenuChoice(string argcs) {
   unsigned short int choice;
   cout << argcs ; cin >> choice;
   return choice;
 }
 
-// ---------- FUNC Load File ----------
+// --- GET INPUT <string> ---
+string getInputString(string argcs) {
+  string input;
+  cout << argcs; cin >> input;
+  return input;
+}
 
-// REMEMBER TO ADD PROMPT TO ASK WHETHER USER WISHES TO LOAD NEW DATASET
+// ---------- FUNC FILE STREAM ----------
 
+// NOTE
+// REMEMBER TO ADD PROMPT TO ASK WHETHER USER WISHES TO LOAD/OVERWRITE DATASETS
+
+// --- FILE LOADING ---
 void loadFile(vector <student> &data) {
   // Initial User Greetings
   cout << "\n ---------- \nFILE LOADING\n ---------- \n" << endl;
@@ -78,6 +88,9 @@ void loadFile(vector <student> &data) {
     if (choice == 'y' || choice == 'Y') { loadFile(data); } else { return; }
 
   } else {
+    // Set isFileLoaded boolean to true
+    isFileLoaded = true;
+
     // Get variables for total number of Students & Subjects
     fin >> totalStudents >> totalSubj;
     fin.ignore();
@@ -115,30 +128,58 @@ void loadFile(vector <student> &data) {
   fin.close();
 }
 
-// --------- FUNC Output File ----------
-
+// --- FILE OUTPUT ---
 void outputFile(vector <student> &data, string fileName) {
   ofstream fout;
-
+  // Do output options
+  cout << "***** Output to \" " << fileName << "\" successful!" << endl;
 }
 
 // ---------- FUNC Data Processing ----------
 
+// --- STANDARD DEVIATION ---
+void calcStdD(vector <student> &data, unsigned short int choice) {
+  if (choice == 1) {
+    cout << "\n ----- 2.2.1 Overall Standard Deviation ----- \n";
+  } else if (choice == 2) {
+    cout << "\n ----- 2.2.2 Standard Deviation per Subject ----- ";
+  } else {
+    cout << "\n\n***** Invalid Input!\n\n";
+  }
+}
 
+// --- AVERAGES > PASSES/FAILURES/DISTINCTIONS ---
+void calcAvg(vector <student> &data, unsigned short int choice) {
+  if (choice == 1) {
+    cout << "\n ----- 2.1.1 Overall Averages ----- \n";
+  } else if (choice == 2) {
+    cout << "\n ----- 2.2.2 Averages per Subject ----- ";
+  } else {
+    cout << "\n\n***** Invalid Input!\n\n";
+  }
+}
 
 // --------- FUNC DISPLAY ----------
 
+// --- MAIN MENU ---
 void displayMenu() {
   cout << "\n ---------- \nAVAILABLE FUNCTIONS\n ---------- \n" << endl;
-  cout << "1. Load Student Data File\n2. Display Statistics ...\n3. DEBUG Display Raw Data\n0. EXIT PROGRAM\n";
+  cout << "1. Load Student Data File\n2. Display Statistics ...\n3. DEBUG\n0. EXIT PROGRAM\n";
 }
 
+// --- STATS ---
 void displayStats(vector <student> &data) {
-  // Ask for type of data to show.
-  // EXAMPLES
-  // Number of Failures, Number of Passes, Number of Distinctions, Standard Deviation, Weighted Mean.
+  unsigned short int choice, choiceType;
+  cout << "\n ---------- 2. DISPLAY STATISTICS ---------- \n1. Averages...\n2. Standard Deviation...\n0. << BACK\nEnter your choice : ";
+  cin >> choice;
+  switch(choice) {
+  case 1 : choiceType = getMenuChoice("\n ----- 2.1. Averages ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcAvg(data, choiceType); break;
+  case 2 : choiceType = getMenuChoice("\n ----- 2.2. Standard Deviation ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcStdD(data, choiceType); break;
+  default : break;
+  }
 }
 
+// --- DEBUG DATA DUMP ---
 void debug_displayData(vector <student> &data) {
   cout << "\n ---------- \nDEBUG DISPLAY DATA\n ---------- \n" << endl;
   cout << "Total num of Students : " << totalStudents << " Total num of Subjects : " << totalSubj << endl;
@@ -152,6 +193,7 @@ void debug_displayData(vector <student> &data) {
   }
 }
 
+// ---------- PROGRAM ENTRY ----------
 int main() {
   vector <student> data;
   unsigned short int menuChoice = 1;
