@@ -76,7 +76,7 @@ void loadFile(vector <student> &data) {
 
   // Initialise file stream
   ifstream fin;
-  fin.open(fileName);
+  fin.open(fileName.c_str());
 
   // IF Statement to check whether file exists.
   if (fin.fail()) {
@@ -131,7 +131,7 @@ void loadFile(vector <student> &data) {
 // --- FILE OUTPUT ---
 void outputFile(vector <student> &data, string fileName) {
   ofstream fout;
-  fout.open(fileName);
+  fout.open(fileName.c_str());
 
   if (fout.is_open()) {
     // Start output
