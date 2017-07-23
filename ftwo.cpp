@@ -8,6 +8,8 @@
 // NOTE To-do list
 // Save data from avg & stdD into a struct. Use this data for file output.
 // Declare structs.
+// Finish up averages
+// Finish up file output
 
 #include <iostream>
 #include <fstream>
