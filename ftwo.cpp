@@ -5,6 +5,10 @@
 // Created by elviskason.lin on 17 July 2017
 //
 
+// NOTE To-do list
+// Save data from avg & stdD into a struct. Use this data for file output.
+// Declare structs.
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -40,6 +44,16 @@ public:
     for (int x = 0; x < (int)marks.size(); x++) { sum += getMark(x); }
     average = sum / marks.size();
   }
+};
+
+// ---------- STRUCT DATAS ----------
+
+struct stdD {
+  
+};
+
+struct avg {
+  
 };
 
 // ---------- FUNC MISC ----------
@@ -130,7 +144,7 @@ void loadFile(vector <student> &data) {
 }
 
 // --- FILE OUTPUT ---
-void outputFile(vector <student> &data, string fileName) {
+void outputFile(vector <student> &data, string fileName, struct stdD, struct avg) {
   ofstream fout;
   fout.open(fileName.c_str());
 
@@ -149,22 +163,49 @@ void outputFile(vector <student> &data, string fileName) {
 // ---------- FUNC Data Processing ----------
 
 // --- STANDARD DEVIATION ---
-void calcStdD(vector <student> &data, unsigned short int choice) {
+void calcStdD(vector <student> &data, unsigned short int choice, bool shouldCout) {
   if (choice == 1) {
     cout << "\n ----- 2.2.1 Overall Standard Deviation ----- \n";
 
+    // DATA PROCESSING
     float sum = 0.0, mean = 0.0, stdD = 0.0, top = 0.0;
     for (int i = 0; i < totalStudents; i++) { sum += data[i].getAverage(); }
     mean = sum/totalStudents;
     for (int ib = 0; ib < totalStudents; ib++) { top += pow((data[ib].getAverage() - mean), 2); }
     stdD = sqrt(top/totalStudents);
 
-    cout << "\n Standard Deviation : " << stdD << endl;
+    if (shouldCout == true) {
+      // COUT stdD value if bool shouldCout is TRUE
+      cout << "\n Standard Deviation : " << stdD << endl;
+    } else {
+      // Save data to struct. & Return.
+    }
 
   } else if (choice == 2) {
-    cout << "\n ----- 2.2.2 Standard Deviation per Subject ----- ";
+    cout << "\n ----- 2.2.2 Standard Deviation per Subject ----- \n";
 
+    // Getting user's choice of subject for analysis.
+    string toShow = "Available subjects for analysis :\n";
+    for (int i = 0; i < totalSubj; i++ ) {
+      toShow += ("[" + to_string(i) + "] " + subjects[i] + "\n");
+    }
+    toShow += "Enter your choice : ";
+    int subjChoice = getMenuChoice(toShow); // Gets and Returns user choice.
+    subjChoice -= 1; // Minus one to choice so that counting starts from zero.
 
+    // Data Processing
+    float sum = 0.0, mean = 0.0, stdD = 0.0, top = 0.0;
+    for (int i = 0; i < totalStudents; i++) { sum += data[i].getMark(subjChoice); }
+    mean = sum/totalStudents;
+    for (int ib = 0; ib < totalStudents; ib++) { top += pow((data[ib].getMark(subjChoice) - mean), 2); }
+    stdD = sqrt(top/totalStudents);
+
+    if (shouldCout == true) {
+      // COUT stdD value if bool shouldCout is TRUE
+      cout << "\n Standard Deviation : " << stdD << endl;
+    } else {
+      // Save data to struct. & Return.
+    }
 
   } else {
     cout << "\n\n***** Invalid Input!\n\n";
@@ -172,12 +213,15 @@ void calcStdD(vector <student> &data, unsigned short int choice) {
 }
 
 // --- AVERAGES > PASSES/FAILURES/DISTINCTIONS ---
-void calcAvg(vector <student> &data, unsigned short int choice) {
+void calcAvg(vector <student> &data, unsigned short int choice, bool shouldCout) {
   if (choice == 1) {
     cout << "\n ----- 2.1.1 Overall Averages ----- \n";
 
+    // Variable Declaration
     unsigned int counterPasses = 0, counterFailures = 0, counterDistinctions = 0;
     vector <string> namesPasses, namesFailures, namesDistinctions;
+
+    // Data Processing
     for (int ia = 0; ia < totalStudents; ia++) {
       float temp = data[ia].getAverage();
       string tempName = data[ia].getName();
@@ -188,7 +232,14 @@ void calcAvg(vector <student> &data, unsigned short int choice) {
       else if (temp < 50.0) { counterFailures++; namesFailures.push_back(tempName); }
     }
 
-    cout << "\nNumber of Passes : " << counterPasses << "\nNumber of Failures : " << counterFailures << "\nNumber of Distinctions : " << counterDistinctions << endl;
+    if (shouldCout == true) {
+      // Only COUT if shouldCout is TRUE
+      cout << "\nNumber of Passes : " << counterPasses << "\nNumber of Failures : " << counterFailures << "\nNumber of Distinctions : " << counterDistinctions << endl;
+    } else {
+      // Else save data to struct and return.
+    }
+
+    // Return data to a struct.
 
   } else if (choice == 2) {
     cout << "\n ----- 2.2.2 Averages per Subject ----- ";
@@ -214,8 +265,8 @@ void displayStats(vector <student> &data) {
   cout << "\n ---------- 2. DISPLAY STATISTICS ---------- \n1. Averages...\n2. Standard Deviation...\n0. << BACK\nEnter your choice : ";
   cin >> choice;
   switch(choice) {
-  case 1 : choiceType = getMenuChoice("\n ----- 2.1. Averages ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcAvg(data, choiceType); break;
-  case 2 : choiceType = getMenuChoice("\n ----- 2.2. Standard Deviation ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcStdD(data, choiceType); break;
+  case 1 : choiceType = getMenuChoice("\n ----- 2.1. Averages ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcAvg(data, choiceType, 1); break;
+  case 2 : choiceType = getMenuChoice("\n ----- 2.2. Standard Deviation ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcStdD(data, choiceType, 1); break;
   default : break;
   }
 }
