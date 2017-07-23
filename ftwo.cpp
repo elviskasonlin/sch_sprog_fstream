@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <cmath>
 
 using namespace std;
 
@@ -102,7 +103,7 @@ void loadFile(vector <student> &data) {
     }
     fin.ignore();
 
-    // Iteration construct to get marks for each student.
+    // Iteration construct to get marks & names for each student.
     for (int ib = 0; ib < totalStudents; ib++) {
       student buffer; // Create a temporary object called buffer that uses student construct.
       string name; float temp;
@@ -151,8 +152,20 @@ void outputFile(vector <student> &data, string fileName) {
 void calcStdD(vector <student> &data, unsigned short int choice) {
   if (choice == 1) {
     cout << "\n ----- 2.2.1 Overall Standard Deviation ----- \n";
+
+    float sum = 0.0, mean = 0.0, stdD = 0.0, top = 0.0;
+    for (int i = 0; i < totalStudents; i++) { sum += data[i].getAverage(); }
+    mean = sum/totalStudents;
+    for (int ib = 0; ib < totalStudents; ib++) { top += pow((data[ib].getAverage() - mean), 2); }
+    stdD = sqrt(top/totalStudents);
+
+    cout << "\n Standard Deviation : " << stdD << endl;
+
   } else if (choice == 2) {
     cout << "\n ----- 2.2.2 Standard Deviation per Subject ----- ";
+
+
+
   } else {
     cout << "\n\n***** Invalid Input!\n\n";
   }
@@ -162,8 +175,26 @@ void calcStdD(vector <student> &data, unsigned short int choice) {
 void calcAvg(vector <student> &data, unsigned short int choice) {
   if (choice == 1) {
     cout << "\n ----- 2.1.1 Overall Averages ----- \n";
+
+    unsigned int counterPasses = 0, counterFailures = 0, counterDistinctions = 0;
+    vector <string> namesPasses, namesFailures, namesDistinctions;
+    for (int ia = 0; ia < totalStudents; ia++) {
+      float temp = data[ia].getAverage();
+      string tempName = data[ia].getName();
+      if (temp >= 50.0) {
+        counterPasses++; namesPasses.push_back(tempName);
+        if (temp >= 75.0) { counterDistinctions++; namesDistinctions.push_back(tempName); }
+      }
+      else if (temp < 50.0) { counterFailures++; namesFailures.push_back(tempName); }
+    }
+
+    cout << "\nNumber of Passes : " << counterPasses << "\nNumber of Failures : " << counterFailures << "\nNumber of Distinctions : " << counterDistinctions << endl;
+
   } else if (choice == 2) {
     cout << "\n ----- 2.2.2 Averages per Subject ----- ";
+
+
+
   } else {
     cout << "\n\n***** Invalid Input!\n\n";
   }
