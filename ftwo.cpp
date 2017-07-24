@@ -508,7 +508,7 @@ int main() {
       case 3 : debug_displayData(data); break;
       case 4 :
         cout << "\n ---------- 4. FILE OUTPUT ---------- \n" << "\n OPTIONS \n=========\n[1] Standard\n[2] Exclude Names\n[3] Save names to separate file";
-        choice = getMenuChoice("Enter your choice : ");
+        choice = getMenuChoice("\nEnter your choice : ");
         fileName = getInputString("\nEnter your choice of output file name : ");
 
         if (choice == 1) { outputFile(data, fileName, false, false); }

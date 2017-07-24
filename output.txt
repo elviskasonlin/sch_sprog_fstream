@@ -1,6 +1,6 @@
 output.txt
-Additional parameters : Excludes Names -> FALSE
- Save names to separate file -> FALSE
+Additional parameters : Save Names to a Separate File -> TRUE
+
 
 ==============================
 Analysis based on - OVERALL MARKS
@@ -11,12 +11,6 @@ Number of Failures : 0
 Number of Distinctions : 6
 Standard Deviation : 9.630276
 
-Students who Passed : 
-0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
-Students who Failed : 
-
-Students who scored Distinctions : 
-0 Jane, 1 Dolly, 2 Zander, 3 Gershwin, 4 Bess, 5 Mia Landy, 
 
 ==============================
 Analysis based on - EACH SUBJECT
@@ -30,12 +24,6 @@ Number of Failures : 0
 Number of Distinctions : 10
 Standard Deviation : 12.112895
 
-Students who Passed : 
-0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
-Students who Failed : 
-
-Students who scored Distinctions : 
-0 Johnny, 1 Tommy, 2 Jane, 3 Molly, 4 Dolly, 5 Zander, 6 Lindsey, 7 Gershwin, 8 Bess, 9 Mia Landy, 
 
 Biotechnology
 -------------
@@ -44,12 +32,6 @@ Number of Failures : 4
 Number of Distinctions : 6
 Standard Deviation : 21.935986
 
-Students who Passed : 
-0 Johnny, 1 Jane, 2 Holly, 3 Dolly, 4 Zander, 5 Gershwin, 6 Bess, 7 Mia Landy, 
-Students who Failed : 
-0 Tommy, 1 Molly, 2 Lindsey, 3 George, 
-Students who scored Distinctions : 
-0 Jane, 1 Dolly, 2 Zander, 3 Gershwin, 4 Bess, 5 Mia Landy, 
 
 Chemistry
 ---------
@@ -58,12 +40,6 @@ Number of Failures : 2
 Number of Distinctions : 6
 Standard Deviation : 22.859928
 
-Students who Passed : 
-0 Johnny, 1 Jane, 2 Holly, 3 Molly, 4 Dolly, 5 Zander, 6 George, 7 Gershwin, 8 Bess, 9 Mia Landy, 
-Students who Failed : 
-0 Tommy, 1 Lindsey, 
-Students who scored Distinctions : 
-0 Johnny, 1 Jane, 2 Dolly, 3 George, 4 Bess, 5 Mia Landy, 
 
 Elementary Mathematics
 ----------------------
@@ -72,12 +48,6 @@ Number of Failures : 0
 Number of Distinctions : 4
 Standard Deviation : 9.169317
 
-Students who Passed : 
-0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
-Students who Failed : 
-
-Students who scored Distinctions : 
-0 Jane, 1 Gershwin, 2 Bess, 3 Mia Landy, 
 
 Additional Mathematics
 ----------------------
@@ -85,10 +55,3 @@ Number of Passes : 11
 Number of Failures : 1
 Number of Distinctions : 9
 Standard Deviation : 18.480282
-
-Students who Passed : 
-0 Tommy, 1 Jane, 2 Holly, 3 Molly, 4 Dolly, 5 Zander, 6 Lindsey, 7 George, 8 Gershwin, 9 Bess, 10 Mia Landy, 
-Students who Failed : 
-0 Johnny, 
-Students who scored Distinctions : 
-0 Jane, 1 Holly, 2 Molly, 3 Zander, 4 Lindsey, 5 George, 6 Gershwin, 7 Bess, 8 Mia Landy, 

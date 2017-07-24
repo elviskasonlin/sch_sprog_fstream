@@ -12,13 +12,14 @@ Students who Failed :
 
 Students who scored Distinctions : 
 0 Jane, 1 Dolly, 2 Zander, 3 Gershwin, 4 Bess, 5 Mia Landy, 
+
 ==============================
 Analysis based on - EACH SUBJECT
 ==============================
 
 
 Literature
-
+----------
 
 Students who Passed : 
 0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
@@ -28,7 +29,7 @@ Students who scored Distinctions :
 0 Jane, 1 Dolly, 2 Zander, 3 Gershwin, 4 Bess, 5 Mia Landy, 
 
 Biotechnology
-
+-------------
 
 Students who Passed : 
 0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
@@ -38,7 +39,7 @@ Students who scored Distinctions :
 0 Jane, 1 Dolly, 2 Zander, 3 Gershwin, 4 Bess, 5 Mia Landy, 
 
 Chemistry
-
+---------
 
 Students who Passed : 
 0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
@@ -48,7 +49,7 @@ Students who scored Distinctions :
 0 Jane, 1 Dolly, 2 Zander, 3 Gershwin, 4 Bess, 5 Mia Landy, 
 
 Elementary Mathematics
-
+----------------------
 
 Students who Passed : 
 0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
@@ -58,7 +59,7 @@ Students who scored Distinctions :
 0 Jane, 1 Dolly, 2 Zander, 3 Gershwin, 4 Bess, 5 Mia Landy, 
 
 Additional Mathematics
-
+----------------------
 
 Students who Passed : 
 0 Johnny, 1 Tommy, 2 Jane, 3 Holly, 4 Molly, 5 Dolly, 6 Zander, 7 Lindsey, 8 George, 9 Gershwin, 10 Bess, 11 Mia Landy, 
