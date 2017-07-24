@@ -307,7 +307,7 @@ void calcAvg(vector <student> &data, unsigned short int choice, bool shouldCout,
 // --- MAIN MENU ---
 void displayMenu() {
   cout << "\n ---------- \nAVAILABLE FUNCTIONS\n ---------- \n" << endl;
-  cout << "1. Load Student Data File\n2. Display Statistics ...\n3. Raw Data Dump\n0. EXIT PROGRAM\n";
+  cout << "1. Load Student Data File\n2. Display Statistics ...\n3. Raw Data Dump\n4. Output statistics ...\n0. EXIT PROGRAM\n";
 }
 
 // --- STATS ---
@@ -339,47 +339,154 @@ void debug_displayData(vector <student> &data) {
 // ---------- FUNC FILE STREAM OUT ---------
 
 void outputFile(vector <student> &data, string fileName, bool shouldExcludeNames, bool shouldSaveNamesToSeparateFile) {
-  if (shouldExcludeNames == true) {
-    ofstream fout; fout.open(fileName.c_str());
-    fout << fileName << "\nAdditional parameters : " << "Excludes Names -> TRUE\n" << endl;
+  if (shouldExcludeNames == false && shouldSaveNamesToSeparateFile == false) {
+    ofstream fout; fout.open(fileName.c_str()); // Opens the output file.
 
-    // Based on overall marks
-    // Averages, Standard Deviation
-    calcAvg(data, 1, false, 0); calcStdD(data, 1, false, 0);
-    fout << "Analysis based on - OVERALL MARKS\n" << "==============================\n";
-    fout << "\nNumber of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+    if (fout.fail()) {
+      cout << "***** ERROR. Can't output to file!" << endl;
+      return;
+    } else {
 
-    // Based on each subject
-    // Averages, Standard Deviation
-    fout << "Analysis based on - EACH SUBJECT\n" << "==============================\n";
-    for (int ia = 0; ia < totalSubj; ia++) {
-      fout << subjects[ia] << endl << setw(subjects[ia].length()) << "-" << endl;
-      calcAvg(data, 2, false, ia); calcStdD(data, 2, false, ia);
+      // ADDITIONAL OPTION
+      // STANDARD OUTPUT WITH NAMES
+
+      fout << fileName << "\nAdditional parameters : " << "Excludes Names -> FALSE\n Save names to separate file -> FALSE" << endl;
+
+      // BASED ON OVERALL MARKS
+      calcAvg(data, 1, false, 0); calcStdD(data, 1, false, 0);
+      fout << "\n==============================" << "\nAnalysis based on - OVERALL MARKS\n" << "==============================\n";
+      // Basic Statistics
+      fout << "\nNumber of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+      // Names of passes, failures, & distinctions
+      fout << "\nStudents who Passed : " << endl;
+      for (int xa = 0; xa < (int)tempAvg.namesPasses.size(); xa++) { fout << to_string(xa) << " " << tempAvg.namesPasses[xa] << ", "; }
+      fout << "\nStudents who Failed : " << endl;
+      for (int xb = 0; xb < (int)tempAvg.namesFailures.size(); xb++) { fout << to_string(xb) << " " << tempAvg.namesFailures[xb] << ", "; }
+      fout << "\nStudents who scored Distinctions : " << endl;
+      for (int xc = 0; xc < (int)tempAvg.namesDistinctions.size(); xc++) { fout << to_string(xc) << " " << tempAvg.namesDistinctions[xc] << ", "; }
+
+      // BASED ON EACH SUBJECT
+      fout << "\n\n==============================" << "\nAnalysis based on - EACH SUBJECT\n" << "==============================\n";
+      for (int ia = 0; ia < totalSubj; ia++) {
+        fout << endl << endl << subjects[ia] << endl << string(subjects[ia].length(), '-') << endl;
+        // Basic Statistics
+        calcAvg(data, 2, false, ia); calcStdD(data, 2, false, ia);
+        fout << "Number of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+        // Names of passes, failures & distinctions
+        fout << "\nStudents who Passed : " << endl;
+        for (int xa = 0; xa < (int)tempAvg.namesPasses.size(); xa++) { fout << to_string(xa) << " " << tempAvg.namesPasses[xa] << ", "; }
+        fout << "\nStudents who Failed : " << endl;
+        for (int xb = 0; xb < (int)tempAvg.namesFailures.size(); xb++) { fout << to_string(xb) << " " << tempAvg.namesFailures[xb] << ", "; }
+        fout << "\nStudents who scored Distinctions : " << endl;
+        for (int xc = 0; xc < (int)tempAvg.namesDistinctions.size(); xc++) { fout << to_string(xc) << " " << tempAvg.namesDistinctions[xc] << ", "; }
+
+      }
+    } // End of else statement
+
+    fout.close();
+
+  } else if (shouldExcludeNames == true && shouldSaveNamesToSeparateFile == false) {
+
+    // ADDITIONAL OPTION
+    // OPTION TO EXCLUDE NAMES
+
+    ofstream fout; fout.open(fileName.c_str()); // Opens the output file.
+
+    if (fout.fail()) {
+      cout << "***** ERROR. Can't output to file!" << endl;
+      return;
+    } else {
+      fout << fileName << "\nAdditional parameters : " << "Excludes Names -> TRUE\n" << endl;
+
+      // Based on overall marks
+      calcAvg(data, 1, false, 0); calcStdD(data, 1, false, 0);
+      fout << "\n==============================" << "\nAnalysis based on - OVERALL MARKS\n" << "==============================\n";
       fout << "\nNumber of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
 
-      // DEBUGGING PURPOSES ONLY
-      cout << to_string(tempAvg.counterPasses) << endl;
-    }
+      // Based on each subject
+      fout << "\n\n==============================" << "\nAnalysis based on - EACH SUBJECT\n" << "==============================\n";
+      for (int ia = 0; ia < totalSubj; ia++) {
+        fout << endl << endl << subjects[ia] << endl << string(subjects[ia].length(), '-') << endl;
+        calcAvg(data, 2, false, ia); calcStdD(data, 2, false, ia);
+        fout << "Number of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+      }
+    } // End of else statement
 
     fout.close();
-  } else if (shouldSaveNamesToSeparateFile == true) {
-    ofstream fout; fout.open(fileName.c_str());
-    fout << fileName << "\nAdditional parameters : " << "Save Names to a Separate File -> TRUE\n" << endl;
 
-    // for loop
+  } else if (shouldExcludeNames == false && shouldSaveNamesToSeparateFile == true) {
 
-    fout.close();
+    // ADDITIONAL OPTIONS
+    // STANDARD OUTPUT WITH NAMES SAVED IN SEPARATE FILE
+
+    // >>> FILE ONE <<<
+    ofstream fout1; fout1.open(fileName.c_str());
+    fout1 << fileName << "\nAdditional parameters : " << "Save Names to a Separate File -> TRUE\n" << endl;
+
+    if (fout1.fail()) {
+      cout << "***** ERROR. Can't output to file!" << endl;
+      return;
+    } else {
+      // Based on overall marks
+      calcAvg(data, 1, false, 0); calcStdD(data, 1, false, 0);
+      fout1 << "\n==============================" << "\nAnalysis based on - OVERALL MARKS\n" << "==============================\n";
+      fout1 << "\nNumber of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+
+      // Based on each subject
+      fout1 << "\n\n==============================" << "\nAnalysis based on - EACH SUBJECT\n" << "==============================\n";
+      for (int ia = 0; ia < totalSubj; ia++) {
+        fout1 << endl << endl << subjects[ia] << endl <<  string(subjects[ia].length(), '-') << endl;
+        calcAvg(data, 2, false, ia); calcStdD(data, 2, false, ia);
+        fout1 << "Number of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+      }
+    } // End of else statement
+    fout1.close();
+    // >>> END of FILE ONE <<<
+
+
+    // >>> FILE TWO <<<
+    ofstream fout2; fout2.open(("names_" + fileName).c_str()); // Opens the output file.
+
+    if (fout2.fail()) {
+      cout << "***** ERROR. Can't output to file!" << endl;
+      return;
+    } else {
+
+      fout2 << "names_" + fileName << "\nAdditional parameters : " << "Separate Names Output -> TRUE\n" << endl;
+
+      // BASED ON OVERALL MARKS
+      calcAvg(data, 1, false, 0); calcStdD(data, 1, false, 0);
+      fout2 << "\n==============================" << "\nAnalysis based on - OVERALL MARKS\n" << "==============================\n";
+      fout2 << "\nStudents who Passed : " << endl;
+      for (int xa = 0; xa < (int)tempAvg.namesPasses.size(); xa++) { fout2 << to_string(xa) << " " << tempAvg.namesPasses[xa] << ", "; }
+      fout2 << "\nStudents who Failed : " << endl;
+      for (int xb = 0; xb < (int)tempAvg.namesFailures.size(); xb++) { fout2 << to_string(xb) << " " << tempAvg.namesFailures[xb] << ", "; }
+      fout2 << "\nStudents who scored Distinctions : " << endl;
+      for (int xc = 0; xc < (int)tempAvg.namesDistinctions.size(); xc++) { fout2 << to_string(xc) << " " << tempAvg.namesDistinctions[xc] << ", "; }
+
+      // BASED ON EACH SUBJECT
+      fout2 << "\n\n==============================" << "\nAnalysis based on - EACH SUBJECT\n" << "==============================\n";
+      for (int ia = 0; ia < totalSubj; ia++) {
+        fout2 << endl << endl << subjects[ia] << endl << string(subjects[ia].length(), '-') << endl;
+        // Names of passes, failures & distinctions
+        fout2 << "\nStudents who Passed : " << endl;
+        for (int xa = 0; xa < (int)tempAvg.namesPasses.size(); xa++) { fout2 << to_string(xa) << " " << tempAvg.namesPasses[xa] << ", "; }
+        fout2 << "\nStudents who Failed : " << endl;
+        for (int xb = 0; xb < (int)tempAvg.namesFailures.size(); xb++) { fout2 << to_string(xb) << " " << tempAvg.namesFailures[xb] << ", "; }
+        fout2 << "\nStudents who scored Distinctions : " << endl;
+        for (int xc = 0; xc < (int)tempAvg.namesDistinctions.size(); xc++) { fout2 << to_string(xc) << " " << tempAvg.namesDistinctions[xc] << ", "; }
+
+      }
+    } // End of else statement
+
+    fout2.close();
+
+
   } else {
     cout << "***** ERROR. Invalid Argument!" << endl;
   }
-
-  ofstream fout1;
-  fout1.open(fileName.c_str());
-
   // cout << "***** Output to \" " << fileName << "\" successful!" << endl;
   // cout << "***** Error Opening \"" << fileName << "\".\n\n";
-
-  fout1.close();
 }
 
 
@@ -387,8 +494,9 @@ void outputFile(vector <student> &data, string fileName, bool shouldExcludeNames
 int main() {
   vector <student> data;
   unsigned short int menuChoice = 1, choice;
+  string fileName;
 
-  cout << endl << "DATA ANALYSIS PROGRAMME V1.0.0a" << endl << "Written by Py." << endl << "-------------------------------\n\n";
+  cout << endl << "DATA ANALYSIS PROGRAMME V1.0.0r" << endl << "Written by Py, Tanaaz, Hou Wei, Nadine, Eleena" << endl << "-------------------------------\n\n";
 
   while (menuChoice != 0) {
     displayMenu();
@@ -399,12 +507,14 @@ int main() {
       case 2 : displayStats(data); break;
       case 3 : debug_displayData(data); break;
       case 4 :
-        cout << "\n ---------- 4. FILE OUTPUT ---------- \n" << "\n OPTIONS \n=========\n[1] Exclude Names\n[2] Save names to separate file.";
+        cout << "\n ---------- 4. FILE OUTPUT ---------- \n" << "\n OPTIONS \n=========\n[1] Standard\n[2] Exclude Names\n[3] Save names to separate file";
         choice = getMenuChoice("Enter your choice : ");
+        fileName = getInputString("\nEnter your choice of output file name : ");
 
-        if (choice == 1) { outputFile(data, "output.txt", true, false); }
-        else if (choice == 2) { outputFile(data, "output.txt", false, true); }
-        else { cout << "***** ERROR. INVALID INPUT." << endl; }
+        if (choice == 1) { outputFile(data, fileName, false, false); }
+        else if (choice == 2) { outputFile(data, fileName, true, false); }
+        else if (choice == 3) { outputFile(data, fileName, false, true); }
+        else { cout << "***** ERROR. Invalid Choice." << endl; }
 
         break;
       default : break;
