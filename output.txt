@@ -1,15 +1,15 @@
 output.txt
-Additional parameters : Save Names to a Separate File -> TRUE
+Additional parameters : Excludes Names -> TRUE
 
 
 ==============================
 Analysis based on - OVERALL MARKS
 ==============================
 
-Number of Passes : 12
-Number of Failures : 0
-Number of Distinctions : 6
-Standard Deviation : 9.630276
+Number of Passes : 77
+Number of Failures : 73
+Number of Distinctions : 4
+Standard Deviation : 11.397669
 
 
 ==============================
@@ -19,39 +19,47 @@ Analysis based on - EACH SUBJECT
 
 Literature
 ----------
-Number of Passes : 12
-Number of Failures : 0
-Number of Distinctions : 10
-Standard Deviation : 12.112895
+Number of Passes : 79
+Number of Failures : 71
+Number of Distinctions : 35
+Standard Deviation : 27.679262
 
 
 Biotechnology
 -------------
-Number of Passes : 8
-Number of Failures : 4
-Number of Distinctions : 6
-Standard Deviation : 21.935986
+Number of Passes : 78
+Number of Failures : 72
+Number of Distinctions : 34
+Standard Deviation : 28.321098
 
 
 Chemistry
 ---------
-Number of Passes : 10
-Number of Failures : 2
-Number of Distinctions : 6
-Standard Deviation : 22.859928
+Number of Passes : 75
+Number of Failures : 75
+Number of Distinctions : 41
+Standard Deviation : 29.570372
 
 
 Elementary Mathematics
 ----------------------
-Number of Passes : 12
-Number of Failures : 0
-Number of Distinctions : 4
-Standard Deviation : 9.169317
+Number of Passes : 84
+Number of Failures : 66
+Number of Distinctions : 44
+Standard Deviation : 29.231403
 
 
 Additional Mathematics
 ----------------------
-Number of Passes : 11
-Number of Failures : 1
-Number of Distinctions : 9
-Standard Deviation : 18.480282
+Number of Passes : 71
+Number of Failures : 79
+Number of Distinctions : 35
+Standard Deviation : 27.172100
+
+
+Electronics
+-----------
+Number of Passes : 62
+Number of Failures : 88
+Number of Distinctions : 31
+Standard Deviation : 27.515081
