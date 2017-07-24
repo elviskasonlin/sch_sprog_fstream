@@ -50,13 +50,18 @@ public:
 
 // ---------- STRUCT DATAS ----------
 
-struct stdD {
-  
+struct stdDeviation {
+  float stdD;
 };
 
-struct avg {
-  
+struct averages {
+  unsigned int counterPasses, counterFailures, counterDistinctions;
+  vector <string> namesPasses, namesFailures, namesDistinctions;
 };
+
+// ---------- VAR Global Variables ----------
+struct stdDeviation tempSD;
+struct averages tempAvg;
 
 // ---------- FUNC MISC ----------
 
@@ -74,12 +79,11 @@ string getInputString(string argcs) {
   return input;
 }
 
-// ---------- FUNC FILE STREAM ----------
+// ---------- FUNC FILE STREAM IN ----------
 
 // NOTE
 // REMEMBER TO ADD PROMPT TO ASK WHETHER USER WISHES TO LOAD/OVERWRITE DATASETS
 
-// --- FILE LOADING ---
 void loadFile(vector <student> &data) {
   // Initial User Greetings
   cout << "\n ---------- \nFILE LOADING\n ---------- \n" << endl;
@@ -145,29 +149,14 @@ void loadFile(vector <student> &data) {
   fin.close();
 }
 
-// --- FILE OUTPUT ---
-void outputFile(vector <student> &data, string fileName, struct stdD, struct avg) {
-  ofstream fout;
-  fout.open(fileName.c_str());
-
-  if (fout.is_open()) {
-    // Start output
-    
-
-    cout << "***** Output to \" " << fileName << "\" successful!" << endl;
-  } else {
-    cout << "***** Error Opening \"" << fileName << "\".\n\n";
-  }
-
-  fout.close();
-}
-
 // ---------- FUNC Data Processing ----------
 
 // --- STANDARD DEVIATION ---
-void calcStdD(vector <student> &data, unsigned short int choice, bool shouldCout) {
+void calcStdD(vector <student> &data, unsigned short int choice, bool shouldCout, int sChoice) {
   if (choice == 1) {
-    cout << "\n ----- 2.2.1 Overall Standard Deviation ----- \n";
+    if (shouldCout == true) {
+      cout << "\n ----- 2.2.1 Overall Standard Deviation ----- \n";
+    }
 
     // DATA PROCESSING
     float sum = 0.0, mean = 0.0, stdD = 0.0, top = 0.0;
@@ -181,19 +170,30 @@ void calcStdD(vector <student> &data, unsigned short int choice, bool shouldCout
       cout << "\n Standard Deviation : " << stdD << endl;
     } else {
       // Save data to struct. & Return.
+      struct stdDeviation buf;
+      buf.stdD = stdD;
+      tempSD = buf;
     }
 
   } else if (choice == 2) {
-    cout << "\n ----- 2.2.2 Standard Deviation per Subject ----- \n";
-
-    // Getting user's choice of subject for analysis.
-    string toShow = "Available subjects for analysis :\n";
-    for (int i = 0; i < totalSubj; i++ ) {
-      toShow += ("[" + to_string(i) + "] " + subjects[i] + "\n");
+    if (shouldCout == true) {
+      cout << "\n ----- 2.2.2 Standard Deviation per Subject ----- \n";
     }
-    toShow += "Enter your choice : ";
-    int subjChoice = getMenuChoice(toShow); // Gets and Returns user choice.
-    subjChoice -= 1; // Minus one to choice so that counting starts from zero.
+
+    // GET USER CHOICE
+    // Getting user's choice of subject for analysis.
+    int subjChoice;
+    if (shouldCout == true) {
+      string toShow = "Available subjects for analysis :\n";
+      for (int i = 0; i < totalSubj; i++ ) {
+        toShow += ("[" + to_string(i+1) + "] " + subjects[i] + "\n");
+      }
+      toShow += "Enter your choice : ";
+      subjChoice = getMenuChoice(toShow); // Gets and Returns user choice.
+      subjChoice -= 1; // Minus one to choice so that counting starts from zero.
+    } else {
+      subjChoice = sChoice;
+    }
 
     // Data Processing
     float sum = 0.0, mean = 0.0, stdD = 0.0, top = 0.0;
@@ -204,9 +204,12 @@ void calcStdD(vector <student> &data, unsigned short int choice, bool shouldCout
 
     if (shouldCout == true) {
       // COUT stdD value if bool shouldCout is TRUE
-      cout << "\n Standard Deviation : " << stdD << endl;
+      cout << "\n Standard Deviation for " << subjects[subjChoice] << " : " << stdD << endl;
     } else {
       // Save data to struct. & Return.
+      struct stdDeviation buf;
+      buf.stdD = stdD;
+      tempSD = buf;
     }
 
   } else {
@@ -215,15 +218,17 @@ void calcStdD(vector <student> &data, unsigned short int choice, bool shouldCout
 }
 
 // --- AVERAGES > PASSES/FAILURES/DISTINCTIONS ---
-void calcAvg(vector <student> &data, unsigned short int choice, bool shouldCout) {
+void calcAvg(vector <student> &data, unsigned short int choice, bool shouldCout, int sChoice) {
   if (choice == 1) {
-    cout << "\n ----- 2.1.1 Overall Averages ----- \n";
+    if (shouldCout == true) {
+      cout << "\n ----- 2.1.1 Overall Averages ----- \n";
+    }
 
-    // Variable Declaration
+    // VAR DECLARATION
     unsigned int counterPasses = 0, counterFailures = 0, counterDistinctions = 0;
     vector <string> namesPasses, namesFailures, namesDistinctions;
 
-    // Data Processing
+    // DATA Processing
     for (int ia = 0; ia < totalStudents; ia++) {
       float temp = data[ia].getAverage();
       string tempName = data[ia].getName();
@@ -234,19 +239,63 @@ void calcAvg(vector <student> &data, unsigned short int choice, bool shouldCout)
       else if (temp < 50.0) { counterFailures++; namesFailures.push_back(tempName); }
     }
 
+    // DATA Output
     if (shouldCout == true) {
       // Only COUT if shouldCout is TRUE
-      cout << "\nNumber of Passes : " << counterPasses << "\nNumber of Failures : " << counterFailures << "\nNumber of Distinctions : " << counterDistinctions << endl;
+      cout << "Data analysis based on student's overall marks.\n" << "\nNumber of Passes : " << counterPasses << "\nNumber of Failures : " << counterFailures << "\nNumber of Distinctions : " << counterDistinctions << endl;
     } else {
       // Else save data to struct and return.
+      struct averages buf;
+      buf.counterPasses = counterPasses; buf.counterFailures = counterFailures; buf.counterDistinctions = counterDistinctions; buf.namesPasses = namesPasses; buf.namesFailures = namesFailures; buf.namesDistinctions = namesDistinctions;
+      tempAvg = buf;
     }
 
-    // Return data to a struct.
-
   } else if (choice == 2) {
-    cout << "\n ----- 2.2.2 Averages per Subject ----- ";
+    if (shouldCout == true) {
+      cout << "\n ----- 2.2.2 Averages per Subject ----- \n";
+    }
 
+    // GET USER CHOICE
+    // Displaying menu choices to user
+    int subjChoice;
+    if (shouldCout == true) {
+      string toShow = "Available subjects for analysis :\n";
+      for (int i = 0; i < totalSubj; i++ ) {
+        toShow += ("[" + to_string(i+1) + "] " + subjects[i] + "\n");
+      }
+      toShow += "Enter your choice : ";
+      // Getting user's menu choice
+      subjChoice = getMenuChoice(toShow); // Gets and Returns user choice.
+      subjChoice -= 1; // Minus one to choice so that counting starts from zero.
+    } else {
+      subjChoice = sChoice;
+    }
 
+    // VAR DECLARATION
+    unsigned int counterPasses = 0, counterFailures = 0, counterDistinctions = 0;
+    vector <string> namesPasses, namesFailures, namesDistinctions;
+
+    // DATA Processing
+    for (int ia = 0; ia < totalStudents; ia++) {
+      float temp = data[ia].getMark(subjChoice);
+      string tempName = data[ia].getName();
+      if (temp >= 50.0) {
+        counterPasses++; namesPasses.push_back(tempName);
+        if (temp >= 75.0) { counterDistinctions++; namesDistinctions.push_back(tempName); }
+      }
+      else if (temp < 50.0) { counterFailures++; namesFailures.push_back(tempName); }
+    }
+
+    // DATA Output
+    if (shouldCout == true) {
+      // Only COUT if shouldCout is TRUE
+      cout << "\nData for " << subjects[subjChoice] << endl << "Number of Passes : " << counterPasses << "\nNumber of Failures : " << counterFailures << "\nNumber of Distinctions : " << counterDistinctions << endl;
+    } else {
+      // Else save data to struct and return.
+      struct averages buf;
+      buf.counterPasses = counterPasses; buf.counterFailures = counterFailures; buf.counterDistinctions = counterDistinctions; buf.namesPasses = namesPasses; buf.namesFailures = namesFailures; buf.namesDistinctions = namesDistinctions;
+      tempAvg = buf;
+    }
 
   } else {
     cout << "\n\n***** Invalid Input!\n\n";
@@ -267,8 +316,8 @@ void displayStats(vector <student> &data) {
   cout << "\n ---------- 2. DISPLAY STATISTICS ---------- \n1. Averages...\n2. Standard Deviation...\n0. << BACK\nEnter your choice : ";
   cin >> choice;
   switch(choice) {
-  case 1 : choiceType = getMenuChoice("\n ----- 2.1. Averages ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcAvg(data, choiceType, 1); break;
-  case 2 : choiceType = getMenuChoice("\n ----- 2.2. Standard Deviation ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcStdD(data, choiceType, 1); break;
+  case 1 : choiceType = getMenuChoice("\n ----- 2.1. Averages ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcAvg(data, choiceType, true, 0); break;
+  case 2 : choiceType = getMenuChoice("\n ----- 2.2. Standard Deviation ----- \nBased on :\n1. Overall Average Marks\n2. Per Subject\nEnter your choice : "); calcStdD(data, choiceType, true, 0); break;
   default : break;
   }
 }
@@ -287,10 +336,57 @@ void debug_displayData(vector <student> &data) {
   }
 }
 
+// ---------- FUNC FILE STREAM OUT ---------
+
+void outputFile(vector <student> &data, string fileName, bool shouldExcludeNames, bool shouldSaveNamesToSeparateFile) {
+  if (shouldExcludeNames == true) {
+    ofstream fout; fout.open(fileName.c_str());
+    fout << fileName << "\nAdditional parameters : " << "Excludes Names -> TRUE\n" << endl;
+
+    // Based on overall marks
+    // Averages, Standard Deviation
+    calcAvg(data, 1, false, 0); calcStdD(data, 1, false, 0);
+    fout << "Analysis based on - OVERALL MARKS\n" << "==============================\n";
+    fout << "\nNumber of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+
+    // Based on each subject
+    // Averages, Standard Deviation
+    fout << "Analysis based on - EACH SUBJECT\n" << "==============================\n";
+    for (int ia = 0; ia < totalSubj; ia++) {
+      fout << subjects[ia] << endl << setw(subjects[ia].length()) << "-" << endl;
+      calcAvg(data, 2, false, ia); calcStdD(data, 2, false, ia);
+      fout << "\nNumber of Passes : " << to_string(tempAvg.counterPasses) << "\nNumber of Failures : " << to_string(tempAvg.counterFailures) << "\nNumber of Distinctions : " << to_string(tempAvg.counterDistinctions) << "\nStandard Deviation : " << to_string(tempSD.stdD) << endl;
+
+      // DEBUGGING PURPOSES ONLY
+      cout << to_string(tempAvg.counterPasses) << endl;
+    }
+
+    fout.close();
+  } else if (shouldSaveNamesToSeparateFile == true) {
+    ofstream fout; fout.open(fileName.c_str());
+    fout << fileName << "\nAdditional parameters : " << "Save Names to a Separate File -> TRUE\n" << endl;
+
+    // for loop
+
+    fout.close();
+  } else {
+    cout << "***** ERROR. Invalid Argument!" << endl;
+  }
+
+  ofstream fout1;
+  fout1.open(fileName.c_str());
+
+  // cout << "***** Output to \" " << fileName << "\" successful!" << endl;
+  // cout << "***** Error Opening \"" << fileName << "\".\n\n";
+
+  fout1.close();
+}
+
+
 // ---------- PROGRAM ENTRY ----------
 int main() {
   vector <student> data;
-  unsigned short int menuChoice = 1;
+  unsigned short int menuChoice = 1, choice;
 
   cout << endl << "DATA ANALYSIS PROGRAMME V1.0.0a" << endl << "Written by Py." << endl << "-------------------------------\n\n";
 
@@ -302,6 +398,15 @@ int main() {
       case 1 : loadFile(data); break;
       case 2 : displayStats(data); break;
       case 3 : debug_displayData(data); break;
+      case 4 :
+        cout << "\n ---------- 4. FILE OUTPUT ---------- \n" << "\n OPTIONS \n=========\n[1] Exclude Names\n[2] Save names to separate file.";
+        choice = getMenuChoice("Enter your choice : ");
+
+        if (choice == 1) { outputFile(data, "output.txt", true, false); }
+        else if (choice == 2) { outputFile(data, "output.txt", false, true); }
+        else { cout << "***** ERROR. INVALID INPUT." << endl; }
+
+        break;
       default : break;
     }
   }
