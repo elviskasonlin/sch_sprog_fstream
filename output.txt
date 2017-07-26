@@ -1,5 +1,5 @@
 output.txt
-Additional parameters : Excludes Names -> TRUE
+Additional parameters : Save Names to a Separate File -> TRUE
 
 
 ==============================
